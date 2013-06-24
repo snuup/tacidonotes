@@ -1,0 +1,144 @@
+@edit: #eea000;
+
+html, body
+{
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: .9em;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #E9E5D9;
+}
+
+h2
+{
+    margin: 2em;
+}
+
+#main
+{
+    width: 1024px;
+    text-align: left;
+}
+
+ul#notes
+{
+    list-style-type: none;
+    margin: 0;
+}
+
+.note
+{
+    padding: 5px;
+    cursor: pointer;
+    margin: 1em;
+    border: solid 1px #ccc;
+    background-color: #fafafa;
+    min-height: 3em;
+
+    &.editing
+    {
+        border: solid 1px @edit;
+    }
+    /*&:hover
+    {
+        border-color: #aaa;
+        background-color: #f8fce8;
+    }*/
+    .name
+    {
+        font-weight: bold;
+        font-size: .85em;
+    }
+
+    .time
+    {
+        font-size: .75em;
+        text-align: right;
+    }
+
+
+    & .normal
+    {
+        display: block;
+    }
+
+    .btnedit
+    {
+        display: inline-block;
+    }
+}
+
+.addnote
+{
+    display: none;
+}
+
+.invite .addnote
+{
+    display: block;
+    color: #777;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.toolbar
+{
+    text-align: right;
+    float: right;
+}
+
+    /* button visibilities */
+    .toolbar button
+    {
+        display: none;
+    }
+
+
+.editing
+{
+    outline: maroon;
+    background-color: white;
+
+    .btnsave, .btncancel, .btndelete
+    {
+        display: inline-block;
+    }
+
+    .btnedit
+    {
+        display: none;
+    }
+}
+
+.editable
+{
+    outline: none;
+    margin-left: 3px;
+    padding: 0 .5em;
+}
+
+    .editable:focus
+    {
+        margin-left: 0;
+        border-left: solid 3px @edit;
+    }
+
+.invite .btnedit
+{
+    display: none;
+}
+
+.content
+{
+    margin-top: 1em;
+}
+
+#pwpanel.hidden
+{
+    input, #btnsetpw
+    {
+        display: none;
+    }
+}
