@@ -21,24 +21,24 @@ class Application {
     var pw: string = localStorage.getItem("pw");
     if (!pw) alert("password must be set!");
     $("#pwpanel").toggleClass("hidden", pw != null);
-    
     if (pw)
     {
       this.nm.pw = pw;
-      this.loadnotes();
+      this.loadNotes();
     }
     $(window).unload(() => this.close());
 
     // view
     this.template = $("#notetemplate").children().get(0);
     $("#notes")
-      .on("click", ".invite", (e) => this.onInviteClick(e))
-      .on("click", ".btndelete", (e) => this.onDeleteClick(e))
-      .on("click", ".btncancel", (e) => this.onCancelClick(e))
-      .on("click", ".btnedit", (e) => this.onEditClick(e))
-      .on("click", ".btnsave", (e) => this.onSaveClick(e));
+      .on("click", ".invite", (e) => this.newNote(e))
+      .on("click", ".btndelete", (e) => this.deleteNote(e))
+      .on("click", ".btncancel", (e) => this.cancelEdit(e))
+      .on("click", ".btnedit", (e) => this.editNote(e))
+      .on("click", ".btnsave", (e) => this.onSaveClick(e))
+      .on("click", ".note", (e) => this.loadUnloadedNote(e));
     $("#btnsetpw").click(() => this.setPassword());
-    $("#btncollapsepwpanel").click(() => this.btnCollapsePwPanel());
+    $("#btncollapsepwpanel").click(() => this.collapsePwPanel());
   }
 
   close() { 
@@ -46,39 +46,32 @@ class Application {
     this.nm.close();
   }
 
-  loadnotes() {
-    this.nm.connect((files: FileInfo[]) => this.notes2view(files));
+  loadNotes() {
+    this.nm.connect((files: FileInfo[]) => {
+      // latest notes on top
+      files.sort((a, b) => b.modifiedAt.getTime() - a.modifiedAt.getTime());
+
+      var $notes = $("#notes");
+      $notes.html("");
+      this.addInvite();
+      var i = 0;
+      files.forEach(fi => {
+        var dom = this.createNoteView(fi);
+        $(dom).data("fi", fi);
+        $notes.append(dom);
+        if (i++ < 2) this.loadNote(fi.path, dom); // load the first 5 notes
+      })
+    });
   }
 
-  notes2view(files: FileInfo[]) {
-    
-    // latest notes on top
-    files.sort((a, b) => b.modifiedAt.getTime() - a.modifiedAt.getTime());
-
-    var $notes = $("#notes");
-    $notes.html("");
-    this.addInvite();
-    var i = 0;
-    files.forEach(fi => {
-      var dom = this.createnoteview(fi);
-      $(dom).data("fi", fi);
-      $notes.append(dom);
-      if (i++ < 5) this.note2view(fi.path, dom); // load the first 5 notes
-    })
-  }
-
-  note2view(filepath: string, noteview: HTMLElement) {        
+  loadNote(filepath: string, noteview: HTMLElement) {
     this.nm.read(filepath, (n: Note) => {
       $(".name", noteview).html(n.name);
       $(".content", noteview).html(n.content);
     });
   }
 
-  getpath(fi: FileInfo) {
-    return "notes/" + fi.name;
-  }
-
-  createnoteview(fi: FileInfo): HTMLElement {
+  createNoteView(fi: FileInfo): HTMLElement {
     var name = "";
     if (fi) {
       name = fi.name;
@@ -91,26 +84,35 @@ class Application {
     return dom;
   }
 
+  loadUnloadedNote(e) {
+    var $noteview = $(e.target).closest(".note");
+    var fi = <FileInfo>$noteview.data("fi");
+    if (fi && $(".content", $noteview).text() == "") {
+      console.log("load note");
+      this.loadNote(fi.path, $noteview.get(0));
+    }
+  }
+
   addInvite() {
-    var nv: HTMLElement = this.createnoteview(null);
+    var nv: HTMLElement = this.createNoteView(null);
     $(nv).addClass("invite");
     $("#notes").prepend(nv);
   }
 
-  onInviteClick(e) {
+  newNote(e) {
     var $noteview = $(e.target).closest(".note");
     $noteview.removeClass("invite");
-    this.switchedit($noteview.get(0), true);
+    this.switchEdit($noteview.get(0), true);
     return false;
   }
 
   onSaveClick(e) {
     var $dom = $(e.target).closest(".note");
     this.save($dom.get(0));    
-    this.ensureinvite();
+    this.ensureInvite();
   }
 
-  ensureinvite() {
+  ensureInvite() {
     if ($("#notes > .note.invite :first").length == 0) {
       this.addInvite();
     }    
@@ -122,33 +124,33 @@ class Application {
     var name = $(".name", dom).html();
     this.nm.save(fi ? fi.path : null, name, content, (fi) => {
       $(dom).data("fi", fi);
-      this.switchedit(dom, false);
+      this.switchEdit(dom, false);
     });
   }
 
-  onDeleteClick(e) {
+  deleteNote(e) {
     var $dom = $(e.target).closest(".note");
     var fi: FileInfo = $dom.data("fi");
     this.nm.deleteNote(fi.path, () => { $dom.remove(); });
   }
 
-  onCancelClick(e) {
+  cancelEdit(e) {
     var $dom = $(e.target).closest(".note");
-    this.switchedit($dom.get(0), false);
+    this.switchEdit($dom.get(0), false);
     var fi = $dom.data("fi");
     if (fi) {
-      this.note2view(fi.path, $dom.get(0));
+      this.loadNote(fi.path, $dom.get(0));
     } else {
       $dom.find(".name,.content").html("");
     }
   }
 
-  onEditClick(e) {
+  editNote(e) {
     var $dom = $(e.target).closest(".note");
-    this.switchedit($dom.get(0), true);
+    this.switchEdit($dom.get(0), true);
   }
 
-  switchedit(notedom: HTMLElement, edit: bool) {
+  switchEdit(notedom: HTMLElement, edit: bool) {
     $(notedom).toggleClass("editing", edit);
     $(".name", notedom).attr("contenteditable", edit).focus();
     $(".content", notedom).attr("contenteditable", edit);
@@ -157,31 +159,14 @@ class Application {
     }
   }
 
-  onwritecomplete(error, stat: FileInfo) {
-    if (error) {
-      console.log(error);  // Something went wrong.
-    }
-    else {
-      console.log("File saved as revision " + stat.versionTag);
-    }
-  }
-
-  debugPrintFiles(fileInfos: FileInfo[]) {
-    fileInfos.forEach(fi => console.log(fi.name));
-  }
-
-  $noteElement(element) {
-    return $(element).closest('li.note');
-  }
-
   setPassword() {
     var pw = $("#pw").val();
     localStorage.setItem("pw", pw);
     this.nm.pw = pw;
-    this.loadnotes();
+    this.loadNotes();
   }
 
-  btnCollapsePwPanel() {
+  collapsePwPanel() {
     $("#pwpanel").toggleClass("hidden");
   }
 }

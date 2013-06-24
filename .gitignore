@@ -1,6 +1,4 @@
 syntax: glob
-js/*.js
-js/*.js.map
 Tacido.v11.suo
 Tacido.csproj.user
 bin/

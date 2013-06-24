@@ -1,4 +1,4 @@
 tacidonotes
 ===========
 
-encrypted notes in the browser, persisted in your dropbox
+encrypted notes in the browser, persisted in your dropbox.
