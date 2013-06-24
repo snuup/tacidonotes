@@ -43,7 +43,6 @@
     };
 
     Application.prototype.close = function () {
-        console.log("unload");
         this.nm.close();
     };
 
@@ -61,9 +60,8 @@
             var i = 0;
             files.forEach(function (fi) {
                 var dom = _this.createNoteView(fi);
-                $(dom).data("fi", fi);
                 $notes.append(dom);
-                if (i++ < 2)
+                if (i++ < 5)
                     _this.loadNote(fi.path, dom);
             });
         });
@@ -77,12 +75,13 @@
     };
 
     Application.prototype.createNoteView = function (fi) {
+        var dom = this.template.cloneNode(true);
         var name = "";
         if (fi) {
             name = fi.name;
             var t = moment(fi.modifiedAt).fromNow();
+            $(dom).data("fi", fi);
         }
-        var dom = this.template.cloneNode(true);
         $(".name", dom).text(name);
         $(".content", dom).text("");
         $(".time", dom).text(t);
@@ -93,7 +92,6 @@
         var $noteview = $(e.target).closest(".note");
         var fi = $noteview.data("fi");
         if (fi && $(".content", $noteview).text() == "") {
-            console.log("load note");
             this.loadNote(fi.path, $noteview.get(0));
         }
     };

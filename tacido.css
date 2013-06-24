@@ -8,15 +8,16 @@ body {
   background-color: #E9E5D9;
 }
 h2 {
-  margin: 2em;
+  margin-left: 1em;
 }
 #main {
-  width: 1024px;
+  max-width: 1024px;
   text-align: left;
 }
 ul#notes {
   list-style-type: none;
   margin: 0;
+  padding: 0;
 }
 .note {
   padding: 5px;
@@ -25,12 +26,6 @@ ul#notes {
   border: solid 1px #ccc;
   background-color: #fafafa;
   min-height: 3em;
-  /*&:hover
-    {
-        border-color: #aaa;
-        background-color: #f8fce8;
-    }*/
-
 }
 .note.editing {
   border: solid 1px #eea000;
@@ -43,14 +38,13 @@ ul#notes {
   font-size: .75em;
   text-align: right;
 }
-.note .normal {
-  display: block;
-}
 .note .btnedit {
   display: inline-block;
 }
 .addnote {
   display: none;
+  /* every note has an addnote, which shall not be displayed */
+
 }
 .invite .addnote {
   display: block;
@@ -61,8 +55,9 @@ ul#notes {
 .toolbar {
   text-align: right;
   float: right;
+  /* button visibilities */
+
 }
-/* button visibilities */
 .toolbar button {
   display: none;
 }

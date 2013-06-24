@@ -57,20 +57,16 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include="index.htm" />
     <Content Include="js\app.ts" />
     <Content Include="lib\moment.js" />
     <Content Include="lib\dropbox.js" />
-    <Content Include="lib\dropbox.min.js" />
     <Content Include="lib\jquery.d.ts" />
     <Content Include="lib\jquery.js" />
-    <Content Include="lib\jquery.min.js" />
-    <Content Include="lib\less.js" />
     <Content Include="lib\sjcl.js" />
-    <Content Include="tacido.htm" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\dropbox.min.map" />
-    <Content Include="lib\jquery.min.map" />
     <Content Include="tacido.less" />
   </ItemGroup>
   <ItemGroup>

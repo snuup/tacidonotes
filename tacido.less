@@ -12,12 +12,12 @@ html, body
 
 h2
 {
-    margin: 2em;
+    margin-left: 1em;
 }
 
 #main
 {
-    width: 1024px;
+    max-width: 1024px;
     text-align: left;
 }
 
@@ -25,6 +25,7 @@ ul#notes
 {
     list-style-type: none;
     margin: 0;
+    padding: 0;
 }
 
 .note
@@ -40,11 +41,7 @@ ul#notes
     {
         border: solid 1px @edit;
     }
-    /*&:hover
-    {
-        border-color: #aaa;
-        background-color: #f8fce8;
-    }*/
+
     .name
     {
         font-weight: bold;
@@ -57,12 +54,6 @@ ul#notes
         text-align: right;
     }
 
-
-    & .normal
-    {
-        display: block;
-    }
-
     .btnedit
     {
         display: inline-block;
@@ -71,10 +62,10 @@ ul#notes
 
 .addnote
 {
-    display: none;
+    display: none; /* every note has an addnote, which shall not be displayed */
 }
 
-.invite .addnote
+.invite .addnote /* only the one in the invite shall show up */
 {
     display: block;
     color: #777;
@@ -82,19 +73,16 @@ ul#notes
     vertical-align: middle;
 }
 
-
 .toolbar
 {
     text-align: right;
     float: right;
-}
-
     /* button visibilities */
-    .toolbar button
+    button
     {
         display: none;
     }
-
+}
 
 .editing
 {

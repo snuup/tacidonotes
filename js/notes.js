@@ -26,7 +26,8 @@ var NoteManager = (function () {
         if (!filepath) {
             // the note is fresh, so we create a new filename
             var d = new Date();
-            var filename = d.getTime() + ".htm";
+            var s = d.toISOString().replace(/[-T:.Z]/g, "_");
+            var filename = s + ".htm";
             filepath = "notes/" + filename;
         }
 
@@ -43,9 +44,13 @@ var NoteManager = (function () {
 
     NoteManager.prototype.read = function (filepath, oncomplete) {
         var _this = this;
-        this.fm.readFile(filepath, function (filecontent) {
+        this.fm.readFile(filepath, function (error, filecontent) {
             var n = _this.decrypt(filecontent);
-            oncomplete(n);
+            if (error) {
+                console.log(error);
+            } else {
+                oncomplete(n);
+            }
         });
     };
 

@@ -32,10 +32,7 @@ var FileManager = (function () {
 
     FileManager.prototype.readFile = function (filepath, oncomplete) {
         this.dbClient.readFile(filepath, null, function (error, data, stat, rangeInfo) {
-            return oncomplete(data);
-        });
-        this.dbClient.readFile(filepath, null, function (error, data, stat, rangeInfo) {
-            return oncomplete(data);
+            return oncomplete(error, data);
         });
     };
 

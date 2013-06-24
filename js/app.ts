@@ -42,7 +42,6 @@ class Application {
   }
 
   close() { 
-    console.log("unload");
     this.nm.close();
   }
 
@@ -56,10 +55,9 @@ class Application {
       this.addInvite();
       var i = 0;
       files.forEach(fi => {
-        var dom = this.createNoteView(fi);
-        $(dom).data("fi", fi);
+        var dom = this.createNoteView(fi);        
         $notes.append(dom);
-        if (i++ < 2) this.loadNote(fi.path, dom); // load the first 5 notes
+        if (i++ < 5) this.loadNote(fi.path, dom); // load the first 5 notes
       })
     });
   }
@@ -72,12 +70,13 @@ class Application {
   }
 
   createNoteView(fi: FileInfo): HTMLElement {
+    var dom = <HTMLElement>this.template.cloneNode(true);
     var name = "";
     if (fi) {
       name = fi.name;
       var t = moment(fi.modifiedAt).fromNow();
+      $(dom).data("fi", fi);
     }
-    var dom = <HTMLElement>this.template.cloneNode(true);
     $(".name", dom).text(name);
     $(".content", dom).text("");
     $(".time", dom).text(t);
@@ -87,8 +86,7 @@ class Application {
   loadUnloadedNote(e) {
     var $noteview = $(e.target).closest(".note");
     var fi = <FileInfo>$noteview.data("fi");
-    if (fi && $(".content", $noteview).text() == "") {
-      console.log("load note");
+    if (fi && $(".content", $noteview).text() == "") {      
       this.loadNote(fi.path, $noteview.get(0));
     }
   }

@@ -40,7 +40,8 @@ class NoteManager
     if (!filepath) {
       // the note is fresh, so we create a new filename
       var d = new Date();
-      var filename = d.getTime() + ".htm";
+      var s = d.toISOString().replace(/[-T:.Z]/g, "_");
+      var filename = s + ".htm";
       filepath = "notes/" + filename;
     }
 
@@ -48,7 +49,7 @@ class NoteManager
     var encrypted = this.encrypt(n);
     this.fm.writeFile(filepath, encrypted, (error, fi) => {
       if (error) {
-        console.log(error)
+        console.log(error);
       } else {
         oncomplete(fi);        
       }
@@ -57,9 +58,13 @@ class NoteManager
 
   read(filepath: string, oncomplete: (n: Note) => void)
   {
-    this.fm.readFile(filepath, (filecontent) => {
-      var n = this.decrypt(filecontent);
-      oncomplete(n);
+    this.fm.readFile(filepath, (error, filecontent) => {
+      var n = this.decrypt(filecontent);      
+      if (error) {
+        console.log(error);
+      } else {
+        oncomplete(n);
+      }
     });
   }
 

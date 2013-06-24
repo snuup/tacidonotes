@@ -40,7 +40,7 @@ class FileManager {
 
   dbClient: IDropboxClient;
 
-  connect(onconnected: () => void ) {
+  connect(onconnected: () => void) {
     this.dbClient = new Dropbox.Client(
     {
       key: "UGY2pGE9W9A=|ZvO6Lo3xD6r5+F9wTvCG1tHlYGuneNZEV/7pArfZNA==", // public key of TacidoNotes
@@ -61,15 +61,14 @@ class FileManager {
         if (error) {
           if (onerror) onerror(error);
           return;
-        }
+        }        
         onresult(entry_stats);
       });
     });
   }
 
-  readFile(filepath: string, oncomplete: (filecontent: string) => void ) {
-    this.dbClient.readFile(filepath, null, (error, data, stat: FileInfo, rangeInfo) => oncomplete(data));
-    this.dbClient.readFile(filepath, null, (error, data, stat: FileInfo, rangeInfo) => oncomplete(data));
+  readFile(filepath: string, oncomplete: (error, filecontent: string) => void ) {
+    this.dbClient.readFile(filepath, null, (error, data, stat: FileInfo, rangeInfo) => oncomplete(error, data));
   }
 
   writeFile(filepath: string, content: string, oncomplete: (error, FileInfo) => void) {
