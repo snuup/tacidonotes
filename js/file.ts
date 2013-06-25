@@ -14,7 +14,7 @@ interface FileInfo {
   humanSize: string;
   hasThumbnail: bool;
   modifiedAt: Date;
-  clientModifiedAt: Date;  
+  clientModifiedAt: Date;
 }
 
 interface IDropboxClient {
@@ -40,18 +40,17 @@ class FileManager {
 
   dbClient: IDropboxClient;
 
-  connect(onconnected: () => void) {
+  connect(onconnected: () => void ) {
     this.dbClient = new Dropbox.Client(
-    {
-      key: "UGY2pGE9W9A=|ZvO6Lo3xD6r5+F9wTvCG1tHlYGuneNZEV/7pArfZNA==", // public key of TacidoNotes
-      sandbox: true
-    });
+      {
+        key: "UGY2pGE9W9A=|ZvO6Lo3xD6r5+F9wTvCG1tHlYGuneNZEV/7pArfZNA==", // public key of TacidoNotes
+        sandbox: true
+      });
     this.dbClient.authDriver(new Dropbox.Drivers.Redirect({ rememberUser: true }))
     this.dbClient.authenticate((error, data) => { console.log(error) }, onconnected);
   }
 
-  close()
-  {
+  close() {
     this.dbClient.signOut();
   }
 
@@ -61,7 +60,7 @@ class FileManager {
         if (error) {
           if (onerror) onerror(error);
           return;
-        }        
+        }
         onresult(entry_stats);
       });
     });
@@ -71,7 +70,7 @@ class FileManager {
     this.dbClient.readFile(filepath, null, (error, data, stat: FileInfo, rangeInfo) => oncomplete(error, data));
   }
 
-  writeFile(filepath: string, content: string, oncomplete: (error, FileInfo) => void) {
+  writeFile(filepath: string, content: string, oncomplete: (error, FileInfo) => void ) {
     this.dbClient.writeFile(filepath, content, null, (error, fi: FileInfo) => oncomplete(error, fi));
   }
 

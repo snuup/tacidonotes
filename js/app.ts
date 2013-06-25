@@ -13,7 +13,7 @@ class Application {
   template: Element;
 
   run() {
-    
+
     // model
     var fm = new FileManager();
     this.nm = new NoteManager(fm);
@@ -41,7 +41,7 @@ class Application {
     $("#btncollapsepwpanel").click(() => this.collapsePwPanel());
   }
 
-  close() { 
+  close() {
     this.nm.close();
   }
 
@@ -55,7 +55,7 @@ class Application {
       this.addInvite();
       var i = 0;
       files.forEach(fi => {
-        var dom = this.createNoteView(fi);        
+        var dom = this.createNoteView(fi);
         $notes.append(dom);
         if (i++ < 5) this.loadNote(fi.path, dom); // load the first 5 notes
       })
@@ -83,10 +83,10 @@ class Application {
     return dom;
   }
 
-  loadUnloadedNote(e) {
+  loadUnloadedNote(e: JQueryEventObject) {
     var $noteview = $(e.target).closest(".note");
     var fi = <FileInfo>$noteview.data("fi");
-    if (fi && $(".content", $noteview).text() == "") {      
+    if (fi && $(".content", $noteview).text() == "") {
       this.loadNote(fi.path, $noteview.get(0));
     }
   }
@@ -106,17 +106,17 @@ class Application {
 
   onSaveClick(e) {
     var $dom = $(e.target).closest(".note");
-    this.save($dom.get(0));    
+    this.save($dom.get(0));
     this.ensureInvite();
   }
 
   ensureInvite() {
     if ($("#notes > .note.invite :first").length == 0) {
       this.addInvite();
-    }    
+    }
   }
 
-  save(dom) {    
+  save(dom) {
     var fi: FileInfo = $(dom).data("fi");
     var content = $(".content", dom).html();
     var name = $(".name", dom).html();

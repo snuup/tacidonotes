@@ -5,10 +5,13 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #E9E5D9;
+  background-color: #555564;
 }
 h2 {
   margin-left: 1em;
+  background-color: #808080;
+  color: white;
+  display: inline-block;
 }
 #main {
   max-width: 1024px;
