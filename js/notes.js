@@ -7,8 +7,8 @@ var Note = (function () {
 })();
 
 var NoteManager = (function () {
-    function NoteManager(fm) {
-        this.fm = fm;
+    function NoteManager() {
+        this.fm = new FileManager();
     }
     NoteManager.prototype.connect = function (success) {
         var _this = this;

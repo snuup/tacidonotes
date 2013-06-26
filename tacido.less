@@ -1,4 +1,6 @@
-@edit: #eea000;
+@bodyback: #f0f0f0;
+@edit: #C49D00;
+@noteback: #fff;
 
 html, body
 {
@@ -7,15 +9,14 @@ html, body
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #555564;
+    background-color: @bodyback;
 }
 
 h2
 {
-    margin-left: 1em;
-    background-color:#808080;
-    color: white;
+    margin-left: 1em;        
     display: inline-block;
+    color: #777;
 }
 
 #main
@@ -36,13 +37,13 @@ ul#notes
     padding: 5px;
     cursor: pointer;
     margin: 1em;
-    border: solid 1px #ccc;
-    background-color: #fafafa;
-    min-height: 3em;
+    outline: solid 1px #ccc;
+    background-color: @noteback;
+    min-height: 3em;    
 
     &.editing
     {
-        border: solid 1px @edit;
+        outline: solid 3px @edit;
     }
 
     .name
@@ -66,6 +67,11 @@ ul#notes
 .addnote
 {
     display: none; /* every note has an addnote, which shall not be displayed */
+}
+
+.note.invite
+{
+    background-color: @bodyback;
 }
 
 .invite .addnote /* only the one in the invite shall show up */

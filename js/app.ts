@@ -14,9 +14,8 @@ class Application {
 
   run() {
 
-    // model
-    var fm = new FileManager();
-    this.nm = new NoteManager(fm);
+    // model    
+    this.nm = new NoteManager();
 
     var pw: string = localStorage.getItem("pw");
     if (!pw) alert("password must be set!");

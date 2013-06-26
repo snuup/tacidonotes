@@ -4,8 +4,7 @@
     Application.prototype.run = function () {
         var _this = this;
         // model
-        var fm = new FileManager();
-        this.nm = new NoteManager(fm);
+        this.nm = new NoteManager();
 
         var pw = localStorage.getItem("pw");
         if (!pw)

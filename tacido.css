@@ -5,13 +5,12 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #555564;
+  background-color: #f0f0f0;
 }
 h2 {
   margin-left: 1em;
-  background-color: #808080;
-  color: white;
   display: inline-block;
+  color: #777;
 }
 #main {
   max-width: 1024px;
@@ -26,12 +25,12 @@ ul#notes {
   padding: 5px;
   cursor: pointer;
   margin: 1em;
-  border: solid 1px #ccc;
-  background-color: #fafafa;
+  outline: solid 1px #ccc;
+  background-color: #ffffff;
   min-height: 3em;
 }
 .note.editing {
-  border: solid 1px #eea000;
+  outline: solid 3px #c49d00;
 }
 .note .name {
   font-weight: bold;
@@ -48,6 +47,9 @@ ul#notes {
   display: none;
   /* every note has an addnote, which shall not be displayed */
 
+}
+.note.invite {
+  background-color: #f0f0f0;
 }
 .invite .addnote {
   display: block;
@@ -83,7 +85,7 @@ ul#notes {
 }
 .editable:focus {
   margin-left: 0;
-  border-left: solid 3px #eea000;
+  border-left: solid 3px #c49d00;
 }
 .invite .btnedit {
   display: none;

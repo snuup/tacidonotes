@@ -38,7 +38,7 @@ declare var Dropbox: any;
 
 class FileManager {
 
-  dbClient: IDropboxClient;
+  private dbClient: IDropboxClient;
 
   connect(onconnected: () => void ) {
     this.dbClient = new Dropbox.Client(

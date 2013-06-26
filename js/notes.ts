@@ -13,11 +13,12 @@ class Note {
 }
 
 class NoteManager {
-  fm: FileManager;
+  
   pw: string;
+  private fm: FileManager;
 
-  constructor(fm: FileManager) {
-    this.fm = fm;
+  constructor() {
+    this.fm = new FileManager();    
   }
 
   connect(success: (files: FileInfo[]) => void ) // returns all notes in the store, descending ordered by modification time
