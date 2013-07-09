@@ -21,7 +21,8 @@ h2
 
 #main
 {
-    max-width: 1024px;
+    width: 100%;
+    max-width:1024px;
     text-align: left;
 }
 
@@ -40,6 +41,9 @@ ul#notes
     outline: solid 1px #ccc;
     background-color: @noteback;
     min-height: 3em;    
+    -webkit-word-break:break-all;
+    -ms-word-break:break-all;
+    word-break:break-all;
 
     &.editing
     {

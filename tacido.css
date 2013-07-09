@@ -13,6 +13,7 @@ h2 {
   color: #777;
 }
 #main {
+  width: 100%;
   max-width: 1024px;
   text-align: left;
 }
@@ -28,6 +29,9 @@ ul#notes {
   outline: solid 1px #ccc;
   background-color: #ffffff;
   min-height: 3em;
+  -webkit-word-break: break-all;
+  -ms-word-break: break-all;
+  word-break: break-all;
 }
 .note.editing {
   outline: solid 3px #c49d00;
