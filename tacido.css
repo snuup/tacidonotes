@@ -38,7 +38,7 @@ ul#notes {
 }
 .note .name {
   font-weight: bold;
-  font-size: .85em;
+  font-size: 1em;
 }
 .note .time {
   font-size: .75em;
