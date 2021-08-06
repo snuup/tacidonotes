@@ -11,3 +11,7 @@ to use this application with your own dropbox account navigate to http://thulka.
 
 
 Use it, Fork it, Enjoy it.
+
+
+# note
+tried this application today August 6 2021 and it did not work anymore. needs some work.
