@@ -3,7 +3,7 @@ tacidonotes
 
 encrypted notes in the browser, persisted in your dropbox.
 
-to use this application with your own dropbox account navigate to http://thulka.github.io/tacidonotes
+to use this application with your own dropbox account navigate to http://thulka.github.io/tacidonotes (*disfunct, see below)
 
 
 1. Enter password . This password is kept in local storage and used for encryption
